@@ -13,6 +13,10 @@ process.on('SIGINT', () => {
     process.exit(0);
 });
 
+process.on('SIGTERM', () => {
+    process.exit(0);
+});
+
 sayHi(userName);
 showLocation();
 sendToConsole('Please enter command');
