@@ -1,19 +1,23 @@
 import { getUserName, sayHi, sayBye } from './user.js';
+import { showLocation } from './location.js';
+import { sendToConsole } from './utils.js'
 
 const { log } = console;
 
 const userName = getUserName();
 
 process.on('exit', () => {
-    sayBye(userName)
+    sayBye(userName);
 });
 
 process.on('SIGINT', () => {
     process.exit(0);
 });
 
-process.on('uncaughtException', (err) => {
-    throw err;
-});
-
 sayHi(userName);
+showLocation();
+sendToConsole('Please enter command');
+
+process.stdin.on('data', (command) => {
+    processCommand(command);
+});
