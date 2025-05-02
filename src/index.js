@@ -1,8 +1,7 @@
 import { getUserName, sayHi, sayBye } from './user.js';
 import { showLocation } from './location.js';
-import { sendToConsole } from './utils.js'
-
-const { log } = console;
+import { sendToConsole } from './utils.js';
+import {processCommand} from './commands.js';
 
 const userName = getUserName();
 
