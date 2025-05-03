@@ -1,7 +1,7 @@
 import { sendToConsole } from "./utils.js";
 import { showLocation, goUp, goTo } from './location.js';
 import { processOsCommand } from "./os.js";
-import { showFilesAndFolders, showFileContent, addFile, addFolder, deleteFile } from './fs.js';
+import { showFilesAndFolders, showFileContent, addFile, addFolder, deleteFile, renameFile } from './fs.js';
 
 const commands = {
     up: { args: 0 },
@@ -100,6 +100,10 @@ export const processCommand = async (command) => {
                 await deleteFile(...args);
                 break;
 
+            case 'rn':
+                await renameFile(...args);
+                break;
+                
             default:
                 sendToConsole('Switch def Invalid input');
         }
