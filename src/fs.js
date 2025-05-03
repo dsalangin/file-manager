@@ -1,5 +1,5 @@
 import { createReadStream } from 'fs';
-import { readdir, open } from 'fs/promises';
+import { readdir, open, mkdir } from 'fs/promises';
 import { EOL } from 'os';
 import { join } from 'path'
 import { getLocation, getAbsolutePath } from "./location.js"
@@ -41,4 +41,8 @@ export const showFileContent = async (pathToFile) => {
 
 export const addFile = async (fileName) => {
     await open(join(getLocation(), fileName), 'wx');
+}
+
+export const addFolder = async (folderName) => {
+    await mkdir(join(getLocation(), folderName));
 }
