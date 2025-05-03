@@ -1,6 +1,6 @@
 import { sendToConsole } from "./utils.js";
-
-const { log } = console;
+import { showLocation } from './location.js';
+import { processOsCommand } from "./os.js";
 
 const commands = {
     up: { args: 0 },
@@ -29,37 +29,55 @@ const commands = {
 
 }
 
-export const processCommand = (command) => {
-    const stringCommand = command.toString().trim();
-
-    if(stringCommand === '.exit') {
-        process.exit(0);
-    }
-
-    const clearCommand = validateCommand(stringCommand);
-
-    if (!clearCommand) {
-        sendToConsole('Invalid input');
-        return;
-    }
-}
-
-const validateCommand = (command) => {
-    const partsCommand = command.split(/\s+/);
-
+const validateCommand = (partsCommand) => {
     const commandRule = commands[partsCommand[0]];
 
     if (!commandRule) {
-        return;
+        return false;
     }
 
     if (commandRule.hasOwnProperty('args') && !(partsCommand.length - 1 === commandRule.args)) {
-        return;
+        return false;
     }
 
     if (partsCommand[0] === 'os' && !commandRule.subcommands.includes(partsCommand[1])) {
+        return false;
+    }
+
+    return true;
+}
+
+export const processCommand = (command) => {
+    const stringCommand = command.toString().trim();
+
+    if (stringCommand === '.exit') {
+        process.exit(0);
+    }
+
+    const partsCommand = stringCommand.split(/\s+/);
+    const isValid = validateCommand(partsCommand);
+
+    if (!isValid) {
+        sendToConsole('Invalid input');
+        showLocation();
         return;
     }
 
-        return partsCommand.join(' ');
+    const [mainCommand, ...args] = partsCommand;
+
+    try {
+        switch (mainCommand) {
+            case 'os':
+                processOsCommand(...args);
+                break;
+
+            default:
+                sendToConsole('Switch def Invalid input');
+        }
+    } catch (err) {
+        sendToConsole('Operation failed');
+        throw err;
+    } finally {
+        showLocation();
+    }
 }
