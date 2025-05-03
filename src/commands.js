@@ -1,5 +1,5 @@
 import { sendToConsole } from "./utils.js";
-import { showLocation } from './location.js';
+import { showLocation, goUp, goTo } from './location.js';
 import { processOsCommand } from "./os.js";
 
 const commands = {
@@ -47,7 +47,7 @@ const validateCommand = (partsCommand) => {
     return true;
 }
 
-export const processCommand = (command) => {
+export const processCommand = async (command) => {
     const stringCommand = command.toString().trim();
 
     if (stringCommand === '.exit') {
@@ -71,12 +71,20 @@ export const processCommand = (command) => {
                 processOsCommand(...args);
                 break;
 
+            case 'up':
+                goUp();
+                break;
+
+            case 'cd':
+                await goTo(...args);
+                break;
+
             default:
                 sendToConsole('Switch def Invalid input');
         }
     } catch (err) {
         sendToConsole('Operation failed');
-        throw err;
+        sendToConsole(err.message)
     } finally {
         showLocation();
     }

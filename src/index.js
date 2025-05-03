@@ -21,6 +21,6 @@ sayHi(userName);
 showLocation();
 sendToConsole('Please enter command');
 
-process.stdin.on('data', (command) => {
-    processCommand(command);
+process.stdin.on('data', async (command) => {
+    await processCommand(command);
 });
