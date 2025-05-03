@@ -1,7 +1,7 @@
 import { sendToConsole } from "./utils.js";
 import { showLocation, goUp, goTo } from './location.js';
 import { processOsCommand } from "./os.js";
-import { showFilesAndFolders } from './fs.js';
+import { showFilesAndFolders, showFileContent } from './fs.js';
 
 const commands = {
     up: { args: 0 },
@@ -82,6 +82,10 @@ export const processCommand = async (command) => {
 
             case 'ls':
                 await showFilesAndFolders();
+                break;
+
+            case 'cat':
+                await showFileContent(...args);
                 break;
 
             default:

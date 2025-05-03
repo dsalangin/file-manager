@@ -23,7 +23,7 @@ export const goUp = () => {
     }
 }
 
-const checkDirectoryExists = async (pathToDir) => {
+export const checkDirectoryExists = async (pathToDir) => {
     try {
         await access(pathToDir, constants.F_OK);
         return true;
@@ -32,9 +32,13 @@ const checkDirectoryExists = async (pathToDir) => {
     }
 }
 
+export const getAbsolutePath = (targetPath) => {
+    return isAbsolute(targetPath) ? targetPath : pathResolve(location, targetPath);
+}
+
 export const goTo = async (pathToDir) => {
     const currentLocation = location;
-    location = isAbsolute(pathToDir) ? pathToDir : pathResolve(location, pathToDir);
+    location = getAbsolutePath(pathToDir);
 
     const isInsideHome = checkHomeDirectoryContainment();
 

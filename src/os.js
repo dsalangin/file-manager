@@ -51,6 +51,6 @@ export const processOsCommand = (command) => {
             break;
 
         default:
-            sendToConsole();
+            sendToConsole('');
     }
 }
