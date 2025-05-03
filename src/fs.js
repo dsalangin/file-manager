@@ -1,8 +1,8 @@
 import { createReadStream } from 'fs';
-import { readdir } from 'fs/promises';
-import { pipeline } from 'stream/promises';
+import { readdir, open } from 'fs/promises';
 import { EOL } from 'os';
-import { getLocation, getAbsolutePath, checkDirectoryExists } from "./location.js"
+import { join } from 'path'
+import { getLocation, getAbsolutePath } from "./location.js"
 import { sendToConsole } from './utils.js';
 
 const FILE_TYPE = {
@@ -37,4 +37,8 @@ export const showFileContent = async (pathToFile) => {
         });
         fileStream.on('error', rej);
     });
+}
+
+export const addFile = async (fileName) => {
+    await open(join(getLocation(), fileName), 'wx');
 }
