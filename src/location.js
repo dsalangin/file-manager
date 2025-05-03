@@ -49,3 +49,7 @@ export const goTo = async (pathToDir) => {
         throw new Error('Path is not exist');
     }
 }
+
+export const getLocation = () => {
+    return location;
+} 
