@@ -1,9 +1,10 @@
-import { createReadStream } from 'fs';
+import { createReadStream, createWriteStream } from 'fs';
 import { readdir, open, mkdir, rm, access, constants, rename as fsRename } from 'fs/promises';
 import { EOL } from 'os';
 import { join, dirname } from 'path'
 import { getLocation, getAbsolutePath } from "./location.js"
 import { sendToConsole } from './utils.js';
+import { pipeline } from 'stream/promises';
 
 const FILE_TYPE = {
     DIRECTORY: 'directory',
@@ -55,18 +56,24 @@ export const renameFile = async (pathToFile, fileName) => {
     const targetPath = getAbsolutePath(pathToFile);
     const renamePath = join(dirname(targetPath), fileName);
 
-    sendToConsole('renameFile');
-    sendToConsole(targetPath);
-    sendToConsole(renamePath);
-
     try {
         await access(renamePath, constants.R_OK | constants.W_OK);
         throw new Error('Operation failed');
     } catch (err) {
-        if(err.message === 'Operation failed') {
+        if (err.message === 'Operation failed') {
             throw err;
         }
-        
+
         await fsRename(targetPath, renamePath);
     }
+}
+
+export const copyFile = async (sourcePath, targetPath) => {
+    const sourceAbsolutePath = getAbsolutePath(sourcePath);
+    const targetAbsolutePath = getAbsolutePath(targetPath);
+
+    await pipeline(
+        createReadStream(sourceAbsolutePath),
+        createWriteStream(targetAbsolutePath)
+    )
 }
