@@ -31,12 +31,6 @@ export const goTo = async (pathToDir) => {
     const currentLocation = location;
     location = getAbsolutePath(pathToDir);
 
-    const isInsideHome = checkHomeDirectoryContainment();
-
-    if (!isInsideHome) {
-        location = homeDir;
-    }
-
     const isDirectoryExists = await checkDirectoryExists(location);
 
     if (!isDirectoryExists) {

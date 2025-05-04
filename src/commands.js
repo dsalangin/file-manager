@@ -58,6 +58,18 @@ const validateCommand = (partsCommand) => {
     return true;
 }
 
+const parseCommand = (command) => {
+    const regex = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
+    const result = [];
+    let match;
+
+    while ((match = regex.exec(command)) !== null) {
+        result.push(match[1] || match[2] || match[0]);
+    }
+
+    return result;
+}
+
 export const processCommand = async (command) => {
     const stringCommand = command.toString().trim();
 
@@ -65,10 +77,10 @@ export const processCommand = async (command) => {
         process.exit(0);
     }
 
-    const partsCommand = stringCommand.split(/\s+/);
+    const partsCommand = parseCommand(command);
     const isValid = validateCommand(partsCommand);
 
-    if (!isValid) {
+    if (!isValid) { 
         sendToConsole('Invalid input');
         showLocation();
         return;
