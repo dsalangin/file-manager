@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { readdir, open, mkdir, rm, access, constants, rename as fsRename } from 'fs/promises';
+import { readdir, open, mkdir, rm, access, rename as fsRename } from 'fs/promises';
 import { EOL } from 'os';
 import { join, dirname } from 'path'
 import { getLocation, getAbsolutePath } from "./location.js"
@@ -57,7 +57,7 @@ export const renameFile = async (pathToFile, fileName) => {
     const renamePath = join(dirname(targetPath), fileName);
 
     try {
-        await access(renamePath, constants.R_OK | constants.W_OK);
+        await access(renamePath);
         throw new Error('Operation failed');
     } catch (err) {
         if (err.message === 'Operation failed') {

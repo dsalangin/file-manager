@@ -12,6 +12,7 @@ import {
     moveFile,
 } from './fs.js';
 import { showHash } from './hash.js';
+import { compressFile } from './compress.js';
 
 const commands = {
     up: { args: 0 },
@@ -80,7 +81,7 @@ export const processCommand = async (command) => {
     const partsCommand = parseCommand(command);
     const isValid = validateCommand(partsCommand);
 
-    if (!isValid) { 
+    if (!isValid) {
         sendToConsole('Invalid input');
         showLocation();
         return;
@@ -136,6 +137,14 @@ export const processCommand = async (command) => {
 
             case 'hash':
                 await showHash(...args);
+                break;
+
+            case 'compress':
+                await compressFile(...args);
+                break;
+
+            case 'decompress':
+                await compressFile(...args);
                 break;
 
             default:
