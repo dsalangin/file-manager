@@ -15,10 +15,10 @@ export const compressFile = async (sourcePath, targetPath) => {
     await access(sourceAbsolutePath);
 
 
-        await pipeline(
-            createReadStream(sourceAbsolutePath, { encoding: 'utf8' }),
-            createBrotliCompress(),
-            createWriteStream(targetAbsolutePath),
+    await pipeline(
+        createReadStream(sourceAbsolutePath),
+        createBrotliCompress(),
+        createWriteStream(targetAbsolutePath),
     );
 }
 
@@ -34,6 +34,6 @@ export const decompressFile = async (sourcePath, targetPath) => {
     await pipeline(
         createReadStream(sourceAbsolutePath),
         createBrotliDecompress(),
-        createWriteStream(targetAbsolutePath, { encoding: 'utf8' }),
+        createWriteStream(targetAbsolutePath),
     )
 }

@@ -1,5 +1,5 @@
 import { homedir as getHomedir } from 'os';
-import { resolve as pathResolve, relative as pathRelative, isAbsolute } from 'path';
+import { resolve as pathResolve, relative as pathRelative, isAbsolute, dirname } from 'path';
 import { access, constants } from 'fs/promises';
 import { sendToConsole } from './utils.js';
 
@@ -29,7 +29,7 @@ export const getAbsolutePath = (targetPath) => {
 
 export const goTo = async (pathToDir) => {
     const currentLocation = location;
-    location = getAbsolutePath(pathToDir);
+    location = dirname(getAbsolutePath(pathToDir));
 
     const isDirectoryExists = await checkDirectoryExists(location);
 
