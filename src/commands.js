@@ -11,6 +11,7 @@ import {
     copyFile,
     moveFile,
 } from './fs.js';
+import { showHash } from './hash.js';
 
 const commands = {
     up: { args: 0 },
@@ -119,6 +120,10 @@ export const processCommand = async (command) => {
 
             case 'mv':
                 await moveFile(...args);
+                break;
+
+            case 'hash':
+                await showHash(...args);
                 break;
 
             default:
