@@ -10,17 +10,8 @@ export const showLocation = () => {
     sendToConsole(`You are currently in ${location}`);
 }
 
-const checkHomeDirectoryContainment = () => {
-    return !pathRelative(homeDir, location).startsWith('..');
-}
-
 export const goUp = () => {
     location = pathResolve(location, '../');
-    const isInsideHome = checkHomeDirectoryContainment();
-
-    if (!isInsideHome) {
-        location = homeDir;
-    }
 }
 
 export const checkDirectoryExists = async (pathToDir) => {
