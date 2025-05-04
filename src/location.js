@@ -29,7 +29,12 @@ export const getAbsolutePath = (targetPath) => {
 
 export const goTo = async (pathToDir) => {
     const currentLocation = location;
-    location = dirname(getAbsolutePath(pathToDir));
+    location = getAbsolutePath(pathToDir);
+
+    if(dirname(location) !== location) {
+        location = currentLocation;
+        throw new Error('Path to file specified');
+    }
 
     const isDirectoryExists = await checkDirectoryExists(location);
 
