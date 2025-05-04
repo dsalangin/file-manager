@@ -77,3 +77,15 @@ export const copyFile = async (sourcePath, targetPath) => {
         createWriteStream(targetAbsolutePath)
     )
 }
+
+export const moveFile = async (sourcePath, targetPath) => {
+    const sourceAbsolutePath = getAbsolutePath(sourcePath);
+    const targetAbsolutePath = getAbsolutePath(targetPath);
+
+    await pipeline(
+        createReadStream(sourceAbsolutePath),
+        createWriteStream(targetAbsolutePath)
+    )
+
+    await deleteFile(sourceAbsolutePath);
+}
