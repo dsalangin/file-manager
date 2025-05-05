@@ -1,0 +1,29 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "Welcome to the File Manager! This CLI tool lets you perform file operations, check system info, calculate hashes, and work with file compression.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "npm run start -- --username=John Doe",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsalangin/file-manager.git"
+  },
+  "keywords": [
+    "nodejs",
+    "file-manager"
+  ],
+  "author": "dsalangin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dsalangin/file-manager/issues"
+  },
+  "homepage": "https://github.com/dsalangin/file-manager#readme"
+}
