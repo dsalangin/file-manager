@@ -12,7 +12,7 @@ import {
     moveFile,
 } from './fs.js';
 import { showHash } from './hash.js';
-import { compressFile } from './compress.js';
+import { compressFile, decompressFile } from './compress.js';
 
 const commands = {
     up: { args: 0 },
@@ -144,7 +144,7 @@ export const processCommand = async (command) => {
                 break;
 
             case 'decompress':
-                await compressFile(...args);
+                await decompressFile(...args);
                 break;
 
             default:
@@ -152,7 +152,6 @@ export const processCommand = async (command) => {
         }
     } catch (err) {
         sendToConsole('Operation failed');
-        sendToConsole(err.message)
     } finally {
         showLocation();
     }

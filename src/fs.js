@@ -89,3 +89,19 @@ export const moveFile = async (sourcePath, targetPath) => {
 
     await deleteFile(sourceAbsolutePath);
 }
+
+export const checkFileNotExists = async (filePath) => {
+    return new Promise(async (res, rej) => {
+        try {
+            await access(filePath);
+            throw new Error('EEXISTS');
+        } catch (err) {
+            if (err.message === 'EEXISTS') {
+                rej(err);
+                return;
+            }
+
+            res()
+        }
+    });
+}
