@@ -18,6 +18,7 @@ process.on('SIGTERM', () => {
 });
 
 sayHi(userName);
+sendToConsole('If the path contains spaces, wrap it in quotes');
 showLocation();
 sendToConsole('Please enter command');
 

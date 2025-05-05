@@ -2,6 +2,7 @@ import { homedir as getHomedir } from 'os';
 import { resolve as pathResolve, relative as pathRelative, isAbsolute, dirname } from 'path';
 import { access, constants } from 'fs/promises';
 import { sendToConsole } from './utils.js';
+import { isDirectory } from './fs.js';
 
 export const homeDir = getHomedir();
 let location = homeDir;
@@ -31,7 +32,7 @@ export const goTo = async (pathToDir) => {
     const currentLocation = location;
     location = getAbsolutePath(pathToDir);
 
-    if(dirname(location) !== location) {
+    if (!(await isDirectory(location))) {
         location = currentLocation;
         throw new Error('Path to file specified');
     }

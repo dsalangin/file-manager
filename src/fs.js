@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { readdir, open, mkdir, rm, access, rename as fsRename } from 'fs/promises';
+import { readdir, open, mkdir, rm, access, rename as fsRename, stat } from 'fs/promises';
 import { EOL } from 'os';
 import { join, dirname } from 'path'
 import { getLocation, getAbsolutePath } from "./location.js"
@@ -104,4 +104,9 @@ export const checkFileNotExists = async (filePath) => {
             res()
         }
     });
+}
+
+export const isDirectory = async (filePath) => {
+    const stats = await stat(filePath);
+    return stats.isDirectory();
 }
